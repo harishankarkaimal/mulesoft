@@ -1,0 +1,47 @@
+#%RAML 1.0
+baseUri: https://anypoint.mulesoft.com/mocking/api/v1/links/61fad8b6-a214-40e3-b960-3ff55948a649/ # 
+version: 1.0
+title: weather-report-api
+
+types:
+  Cities: !include Types/cities-data-type.raml
+  Weather: !include Types/city-weather-details.raml
+
+/cities:
+ get:
+   queryParameters:
+     country:
+      required: true
+      enum: [Australia,New Zealand]
+   responses:
+     200:
+       body:
+         application/json:
+          type: Cities[]
+          examples:
+            output: !include Examples/cities-by-country-example.raml
+
+/weather:
+ get:
+   queryParameters:
+     city:
+      required: true
+     country:
+      required: true
+   responses:
+     200:
+       body:
+         application/json:
+           type: Weather
+           examples:
+             output: !include Examples/city-weather-example.raml
+             
+
+
+
+
+
+           
+             
+
+  

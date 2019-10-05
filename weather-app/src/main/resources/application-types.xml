@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="getCitiesByCountry" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: string]]></types:shape>
+    </types:type>
+    <types:type name="transformed_resp" format="json">
+      <types:shape format="weave" example="examples/response-transformation.json"><![CDATA[%dw 2.0
+
+type transformed_resp = Array<{|  NewDataSet: {|    Table: {|      Country: String,       City: String    |}  |}|}> {"example": "[{\"NewDataSet\":{\"Table\":{\"Country\":\"Australia\",\"City\":\"Williamtown Aerodrome\"}}}]"}
+
+]]></types:shape>
+    </types:type>
+    <types:type name="transformed_resp_weather" format="java">
+      <types:shape format="raml"><![CDATA[#%RAML 1.0 DataType
+type: string]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#48ac0991-912d-4644-892e-b3ee717ae98b">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="transformed_resp"/>
+        </types:message>
+      </types:input-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
